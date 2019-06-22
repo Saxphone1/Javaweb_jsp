@@ -1,6 +1,5 @@
 package com.yang.web;
 
-
 import com.yang.domain.Product;
 import com.yang.service.ProductService;
 
@@ -12,7 +11,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ProductListServlet extends HttpServlet{
+public class AdminProductListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -20,10 +19,10 @@ public class ProductListServlet extends HttpServlet{
         try {
             ProductService productService =new ProductService();
 
-            List<Product> productList  = productService.getAllproduct();
+            List<Product> productList = productService.getAllproduct();
             req.setAttribute("productList",productList);
 
-            req.getRequestDispatcher("product_list.jsp").forward(req,resp);
+            req.getRequestDispatcher("admin/product/list.jsp").forward(req,resp);
 
         } catch (SQLException e) {
             e.printStackTrace();

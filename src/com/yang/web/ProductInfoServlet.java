@@ -17,6 +17,7 @@ public class ProductInfoServlet extends HttpServlet {
 
         try {
             String pid = req.getParameter("pid");
+
             ProductService productService = new ProductService();
             Product product = productService.getProductById(pid);
             req.setAttribute("product" , product);

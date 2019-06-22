@@ -27,9 +27,6 @@ public class Product implements Serializable{
     private String cid;
     private String pdate;
 
-
-
-
     public String getPid() {
         return pid;
     }
@@ -122,6 +119,7 @@ public class Product implements Serializable{
                 ", is_hot=" + is_hot +
                 ", pflag=" + pflag +
                 ", cid='" + cid + '\'' +
+                ", pdate='" + pdate + '\'' +
                 '}';
     }
 }

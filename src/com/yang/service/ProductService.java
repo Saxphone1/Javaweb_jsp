@@ -1,6 +1,7 @@
 package com.yang.service;
 
 import com.yang.dao.ProductDao;
+import com.yang.domain.Category;
 import com.yang.domain.Product;
 
 import java.sql.SQLException;
@@ -20,5 +21,14 @@ public class ProductService {
 
     public Product getProductById(String pid) throws SQLException {
         return productDao.getProductById(pid);
+    }
+
+
+    public List<Category> getAllCategory() throws SQLException {
+        return productDao.getAllCategory();
+    }
+
+    public void addProduct(Product product) throws SQLException {
+        productDao.addProduct(product);
     }
 }
