@@ -54,4 +54,45 @@
         <url-pattern>/adminProductAdd</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AdminDeleteProductServlet</servlet-name>
+        <servlet-class>com.yang.web.AdminDeleteProductServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AdminDeleteProductServlet</servlet-name>
+        <url-pattern>/adminDeleteProduct</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminProductUpdateUIServlet</servlet-name>
+        <servlet-class>com.yang.web.AdminProductUpdateUIServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AdminProductUpdateUIServlet</servlet-name>
+        <url-pattern>/adminProductUpdateUI</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>AdminProductUpdateServlet</servlet-name>
+        <servlet-class>com.yang.web.AdminProductUpdateServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AdminProductUpdateServlet</servlet-name>
+        <url-pattern>/adminProductUpdate</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminSearchServlet</servlet-name>
+        <servlet-class>com.yang.web.AdminSearchServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AdminSearchServlet</servlet-name>
+        <url-pattern>/adminSearch</url-pattern>
+    </servlet-mapping>
+
+
+
 </web-app>

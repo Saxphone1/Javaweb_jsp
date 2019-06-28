@@ -1,7 +1,9 @@
 package com.yang.web;
 
+import com.yang.domain.Category;
 import com.yang.domain.Product;
 import com.yang.service.ProductService;
+import com.yang.vo.Condition;
 import org.apache.commons.beanutils.BeanUtils;
 
 import javax.servlet.ServletException;
@@ -11,29 +13,28 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.UUID;
+import java.util.List;
 
-public class AdminProductAddServlet extends HttpServlet {
+public class AdminSearchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 
         try {
             req.setCharacterEncoding("utf-8");
-            Product product = new Product();
-            BeanUtils.populate(product, req.getParameterMap());
-            //手动放入前端没有自动映射的数据 pid , pimage , pflag , pdate
-            product.setPid(UUID.randomUUID().toString());
-            product.setPimage("products/1/c_0001.jpg");
-            product.setPflag(0);
-            product.setPdate(new SimpleDateFormat("yyyy-MM-dd hh-mm-ss").format(new Date().getTime()));
+            Condition condition = new Condition();
+            BeanUtils.populate(condition, req.getParameterMap());
 
             ProductService productService =new ProductService();
-            productService.addProduct(product);
+            List<Product> productList=productService.getProductByCondition(condition);
+            List<Category> categoryList  = productService.getAllCategory();
+//            将传达到后端的值反馈在前端页面,让跳转后有值，不会复原初始化
+            req.setAttribute("productList",productList);
+            req.setAttribute("categoryList",categoryList);
+            req.setAttribute("condition",condition);
 
-            resp.sendRedirect(req.getContextPath()+"/adminProductList");
+            req.getRequestDispatcher("/admin/product/list.jsp").forward(req,resp);
+
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

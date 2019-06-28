@@ -13,27 +13,24 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.UUID;
 
-public class AdminProductAddServlet extends HttpServlet {
+public class AdminProductUpdateServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
 
         try {
             req.setCharacterEncoding("utf-8");
             Product product = new Product();
-            BeanUtils.populate(product, req.getParameterMap());
-            //手动放入前端没有自动映射的数据 pid , pimage , pflag , pdate
-            product.setPid(UUID.randomUUID().toString());
-            product.setPimage("products/1/c_0001.jpg");
-            product.setPflag(0);
+            BeanUtils.populate(product , req.getParameterMap());
             product.setPdate(new SimpleDateFormat("yyyy-MM-dd hh-mm-ss").format(new Date().getTime()));
+            product.setPflag(0);
+            ProductService productService = new ProductService();
+            System.out.println("product = " + product);
+            productService.updateProductByProduct(product);
 
-            ProductService productService =new ProductService();
-            productService.addProduct(product);
+            resp.sendRedirect(req.getContextPath() + "/adminProductList");
 
-            resp.sendRedirect(req.getContextPath()+"/adminProductList");
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -42,10 +39,11 @@ public class AdminProductAddServlet extends HttpServlet {
             e.printStackTrace();
         }
 
+
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
+        doGet(req , resp);
     }
 }

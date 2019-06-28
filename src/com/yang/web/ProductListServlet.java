@@ -3,6 +3,7 @@ package com.yang.web;
 
 import com.yang.domain.Product;
 import com.yang.service.ProductService;
+import com.yang.vo.PageBean;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,12 +19,37 @@ public class ProductListServlet extends HttpServlet{
 
 
         try {
-            ProductService productService =new ProductService();
+            PageBean pageBean = new PageBean();
+            ProductService productService = new ProductService();
+            String currentPage = req.getParameter("currentPage");
+            //默认值
+            if(currentPage == null) currentPage = "1";
+            //1、封装当前页
+            pageBean.setCurrentPage(Integer.valueOf(currentPage));
+            //2、总数量
+            int totalCount = productService.getTotalCount();
+            pageBean.setTotalCount(totalCount);
+            //3、每页最大数量
+            int maxCount = 12;
+            pageBean.setMaxCount(maxCount);
+            //4、总页数
+            int totalPages = (int)Math.ceil(1.0*totalCount / maxCount);
+            pageBean.setTotalPages(totalPages);
 
-            List<Product> productList  = productService.getAllproduct();
-            req.setAttribute("productList",productList);
-
-            req.getRequestDispatcher("product_list.jsp").forward(req,resp);
+            /***
+             *    当前页     索引   数量
+             *     1           0      12
+             *     2           12     12
+             *     3           24     12
+             *
+             */
+            int index = (Integer.valueOf(currentPage) - 1) * maxCount;
+            //5、当前页数据
+            List<Product> productList = productService.getProductsByLimit(index , maxCount);
+            pageBean.setProductList(productList);
+            //List<Product> productList = productService.getAllProduct();
+            req.setAttribute("pageBean" , pageBean);
+            req.getRequestDispatcher("product_list.jsp").forward(req , resp);
 
         } catch (SQLException e) {
             e.printStackTrace();

@@ -6,7 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="${pageContext.request.contextPath}/css/Style1.css"
 	rel="stylesheet" type="text/css" />
-<script language="javascript"
+	<script type="text/javascript" src="../../js/jquery-1.11.3.min.js"></script>
+	<script language="javascript"
 	src="${pageContext.request.contextPath}/js/public.js"></script>
 <script type="text/javascript">
 			function addProduct(){
@@ -18,15 +19,44 @@
 				if(b){
                     window.location.href = "${pageContext.request.contextPath}/adminDeleteProduct?pid=" + pid;
 				}
+                $(function () {
+                    // alert("text");
+                    $("#cid option[value = ${condition.cid}]").prop("selected" ,true);
+                    $("#is_hot option[value = ${condition.is_hot}]").prop("selected" ,true);
+                });
             }
+
+// 动态选中检索查询框中的value
+            $(function () {
+                $("#cid option[value = ${condition.cid}]").prop("selected" , true);
+                $("#is_hot option[value = ${condition.is_hot}]").prop("selected" , true);
+            });
 		</script>
 </HEAD>
 <body>
 	<br>
 	<form id="Form1" name="Form1"
-		action="${pageContext.request.contextPath}/user/list.jsp"
+		action="${pageContext.request.contextPath}/adminSearch"
 		method="post">
-		<table cellSpacing="1" cellPadding="0" width="100%" align="center"
+
+		<%--一个检索查询框--%>
+		商品名称：<input type="text" style="height: 22px" name="pname" value="${condition.pname}">
+		是否热销:<select name="is_hot" id="is_hot">
+			<option value="">不限</option>
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</select>
+		分类：<select name="cid" id="cid">
+			<option value="">不限</option>
+			<c:forEach items="${categoryList}" var="category">
+				<option value="${category.cid}">${category.cname}</option>
+			</c:forEach>
+
+		</select>
+
+
+		<input type="submit" value="搜索"/>
+		<table style="margin-top: 10px" cellSpacing="1" cellPadding="0" width="100%" align="center"
 			bgColor="#f5fafe" border="0">
 			<TBODY>
 				<tr>
@@ -74,7 +104,7 @@
 										<c:if test="${product.is_hot != 1}">否</c:if>
 										</td>
 									<td align="center" style="HEIGHT: 22px"><a
-											href="${ pageContext.request.contextPath }/admin/product/edit.jsp">
+											href="${ pageContext.request.contextPath }/adminProductUpdateUI?pid=${product.pid}">
 										<img
 												src="${pageContext.request.contextPath}/images/i_edit.gif"
 												border="0" style="CURSOR: hand">

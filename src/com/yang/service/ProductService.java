@@ -3,6 +3,7 @@ package com.yang.service;
 import com.yang.dao.ProductDao;
 import com.yang.domain.Category;
 import com.yang.domain.Product;
+import com.yang.vo.Condition;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -30,5 +31,28 @@ public class ProductService {
 
     public void addProduct(Product product) throws SQLException {
         productDao.addProduct(product);
+    }
+
+    public void deleteProductById(String pid) throws SQLException {
+        productDao.deleteProductById(pid);
+    }
+
+    public List<Product> getProductByCondition(Condition condition) throws SQLException {
+        return productDao.getAllProductsByCondition(condition);
+
+    }
+
+    public void updateProductByProduct(Product product) throws SQLException {
+        productDao.updateProductByProduct(product);
+    }
+
+    public List<Product> getProductsByLimit(int index, int maxCount) throws SQLException {
+        return productDao.getProductsByLimit(index , maxCount);
+
+    }
+
+    public int getTotalCount() throws SQLException {
+        return productDao.getTotalCount();
+
     }
 }
